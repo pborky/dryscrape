@@ -3,21 +3,25 @@ Headless Webkit driver for dryscrape. Wraps the ``webkit_server`` module.
 """
 
 import dryscrape.mixins
-import webkit_server
+try:
+    import server as server
+except ImportError:
+    import webkit_scraper as server
 
-class Node(webkit_server.Node,
+
+class Node(server.Node,
            dryscrape.mixins.SelectionMixin,
            dryscrape.mixins.AttributeMixin):
   """ Node implementation wrapping a ``webkit_server`` node. """
 
 
-class NodeFactory(webkit_server.NodeFactory):
+class NodeFactory(server.NodeFactory):
   """ overrides the NodeFactory provided by ``webkit_server``. """
   def create(self, node_id):
     return Node(self.client, node_id)
 
 
-class Driver(webkit_server.Client,
+class Driver(server.Client,
              dryscrape.mixins.WaitMixin,
              dryscrape.mixins.HtmlParsingMixin):
   """ Driver implementation wrapping a ``webkit_server`` driver.
