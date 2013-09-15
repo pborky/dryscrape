@@ -4,7 +4,7 @@ Headless Webkit driver for dryscrape. Wraps the ``webkit_server`` module.
 
 import dryscrape.mixins
 try:
-    import server as server
+    import webkit_server as server
 except ImportError:
     import webkit_scraper as server
 
