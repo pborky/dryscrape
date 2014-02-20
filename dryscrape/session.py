@@ -1,5 +1,5 @@
 import urlparse
-from dryscrape.driver.webkit import Driver as DefaultDriver
+
 
 class Session(object):
   """ A web scraping session based on a driver instance. Implements the proxy
@@ -15,7 +15,15 @@ class Session(object):
   def __init__(self,
                driver = None,
                base_url = None):
-    self.driver = driver or DefaultDriver()
+    
+    if driver is not None:
+      self.driver = driver
+    else:
+      try:
+        from dryscrape.driver.webkit import Driver as DefaultDriver
+        self.driver = DefaultDriver()
+      except ImportError:
+        raise ValueError('No driver instance can be created.')
     self.base_url = base_url
 
   # implement proxy pattern
